@@ -14,33 +14,22 @@ script = raw"""
 cd $WORKSPACE/srcdir
 cd TestU01-1.2.3/
 update_configure_scripts
-if [ $target = "x86_64-w64-mingw32" ]; then
-  lt_cv_deplibs_check_method=pass_all ./configure --prefix=$prefix --host=$target LDFLAGS="-L/opt/x86_64-w64-mingw32/x86_64-w64-mingw32/lib/ -lws2_32"
+if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
+  lt_cv_deplibs_check_method=pass_all ./configure --prefix=$prefix --host=$target LDFLAGS="-L/opt/$target/$target/lib/ -lws2_32"
 else
   ./configure --prefix=$prefix --host=$target
 fi
 make tcode.o EXEEXT="" CC=/opt/x86_64-linux-gnu/bin/gcc
-make tcode EXEEXT="" CC=/opt/x86_64-linux-gnu/bin/gcc LDFLAGS="" CFLAGS=""
-make EXEEXT=""
+make tcode EXEEXT="" CC=/opt/x86_64-linux-gnu/bin/gcc LDFLAGS=""
+make -j${nproc} EXEEXT=""
 make install EXEEXT=""
 
 """
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
-platforms = [
-    Linux(:i686, :glibc),
-    Linux(:x86_64, :glibc),
-    Linux(:aarch64, :glibc),
-    Linux(:armv7l, :glibc, :eabihf),
-    Linux(:powerpc64le, :glibc),
-    Linux(:i686, :musl),
-    Linux(:x86_64, :musl),
-    Linux(:aarch64, :musl),
-    Linux(:armv7l, :musl, :eabihf),
-    MacOS(:x86_64),
-    Windows(:x86_64)
-]
+
+platforms = supported_platforms()
 
 # The products that we will ensure are always built
 products(prefix) = [
@@ -49,7 +38,7 @@ products(prefix) = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    
+
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
