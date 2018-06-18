@@ -1,10 +1,5 @@
-# TestU01 builder
+# TestU01Builder
 
-This repository builds binary artifacts for the TestU01 project.
-This repository has a default .travis.yml file that can be used to build
-binary artifacts on Travis CI. You will however need to setup the release
-upload manually. See https://docs.travis-ci.com/user/deployment/releases/.
+[![Build Status](https://travis-ci.org/andreasnoack/TestU01Builder.svg?branch=master)](https://travis-ci.org/andreasnoack/TestU01Builder)
 
-If you don't wish to use travis, you can use the build_tarballs.jl
-file manually and upload the resulting artifacts to a hosting provider
-of your choice.
+This repository builds binary artifacts for the TestU01 project and the RNGTest Julia package.
