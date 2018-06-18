@@ -38,3 +38,4 @@ deploy:
   file: products/*
   on:
     repo: andreasnoack/TestU01Builder
+    tags: true
