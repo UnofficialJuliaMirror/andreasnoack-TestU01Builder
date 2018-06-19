@@ -6,7 +6,7 @@ using BinaryBuilder
 sources = [
     "http://simul.iro.umontreal.ca/testu01/TestU01.zip" =>
     "bc1d1dd2aea7ed3b3d28eaad2c8ee55913f11ce67aec8fe4f643c1c0d2ed1cac",
-
+    "./src",
 ]
 
 # Bash recipe for building across all platforms
@@ -24,6 +24,10 @@ make tcode EXEEXT="" CC=/opt/x86_64-linux-gnu/bin/gcc LDFLAGS=""
 make -j${nproc} EXEEXT=""
 make install EXEEXT=""
 
+# Compile TestU01extractors shim
+cd $WORKSPACE/srcdir/TestU01extractors/
+make install
+
 """
 
 # These are the platforms we will build for by default, unless further
@@ -35,6 +39,7 @@ platforms = supported_platforms()
 products(prefix) = [
     LibraryProduct(prefix, "libtestu01", :libtestu01),
     LibraryProduct(prefix, "libprobdist", :libprobdist),
+    LibraryProduct(prefix, "libtestu01extractors", :libtestu01extractors),
 ]
 
 # Dependencies that must be installed before this package can be built
