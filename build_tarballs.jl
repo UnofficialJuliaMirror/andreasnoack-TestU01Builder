@@ -26,7 +26,7 @@ make install EXEEXT=""
 
 # Compile TestU01extractors shim
 cd $WORKSPACE/srcdir/TestU01extractors/
-make install
+make install SHLIB_EXT=$dlext
 
 """
 
